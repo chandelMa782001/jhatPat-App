@@ -1,6 +1,6 @@
 import { MdCheckCircle, MdDownload, MdStar } from 'react-icons/md'
 import { FaApple, FaGooglePlay } from 'react-icons/fa'
-
+import mobile from '../assets/Image/mobileImage.png'
 const AppDownload = () => {
   const features = [
     'Exclusive app-only discounts up to 50%',
@@ -74,22 +74,17 @@ const AppDownload = () => {
           {/* Right - Phone Mockup */}
           <div className="relative flex justify-center lg:justify-end">
             <div className="relative">
-              {/* Phone Frame */}
-              <div className="relative w-72 h-[500px] bg-gray-900 rounded-[3rem] p-3 shadow-2xl">
-                {/* Screen */}
-                <div className="w-full h-full bg-blue-500 rounded-[2.5rem] overflow-hidden relative">
-                  {/* Notch */}
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-gray-900 rounded-b-2xl z-10"></div>
-                  
-                  {/* Screen Content */}
-                  <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold">
-                    Booking.com
-                  </div>
-                </div>
+              <div className='bg-[#101828] rounded-[32px] p-3 shadow-2xl'>
+              {/* Phone Image */}
+              <img 
+                src={mobile} 
+                alt="Jhatpat App" 
+                className="w-72 h-auto rounded-[28px] relative z-10"
+              />
               </div>
 
               {/* Floating Notification 1 */}
-              <div className="absolute top-20 -right-4 bg-white rounded-xl shadow-lg p-4 w-56 animate-float">
+              <div className="absolute top-20 -right-4 bg-white rounded-xl shadow-lg p-4 w-56 animate-float z-20">
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <MdCheckCircle className="text-green-600 text-xl" />
@@ -102,7 +97,7 @@ const AppDownload = () => {
               </div>
 
               {/* Floating Notification 2 */}
-              <div className="absolute bottom-32 -left-4 bg-white rounded-xl shadow-lg p-4 w-56 animate-float-delayed">
+              <div className="absolute bottom-32 -left-4 bg-white rounded-xl shadow-lg p-4 w-56 animate-float-delayed z-20">
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <MdStar className="text-orange-600 text-xl" />
