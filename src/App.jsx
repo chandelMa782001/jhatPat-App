@@ -8,6 +8,11 @@ import CheapestFlights from './Component/CheapestFlights'
 import MarriageBanner from './Component/MarriageBanner'
 import PopularRoutes from './Component/PopularRoutes'
 import GrowWithJhatpat from './Component/GrowWithJhatpat'
+import Testimonials from './Component/Testimonials'
+import TravelInspiration from './Component/TravelInspiration'
+import AppDownload from './Component/AppDownload'
+import WhyTrustUs from './Component/WhyTrustUs'
+import Footer from './Component/Footer'
 
 const App = () => {
   return (
@@ -22,6 +27,11 @@ const App = () => {
       <MarriageBanner />
       <PopularRoutes />
       <GrowWithJhatpat />
+      <Testimonials />
+      <TravelInspiration />
+      <AppDownload />
+      <WhyTrustUs />
+      <Footer />
     </div>
   )
 }
