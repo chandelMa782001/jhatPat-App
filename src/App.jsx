@@ -26,12 +26,12 @@ const App = () => {
       <CheapestFlights />
       <MarriageBanner />
       <PopularRoutes />
-      <GrowWithJhatpat />
+       <GrowWithJhatpat />
       <Testimonials />
       <TravelInspiration />
       <AppDownload />
       <WhyTrustUs />
-      <Footer />
+      <Footer /> 
     </div>
   )
 }
