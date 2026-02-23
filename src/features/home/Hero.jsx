@@ -6,9 +6,8 @@ import TrainsForm from '../../components/forms/TrainsForm'
 import BusesForm from '../../components/forms/BusesForm'
 import CabsForm from '../../components/forms/CabsForm'
 import EventsForm from '../../components/forms/EventsForm'
-
 const Hero = () => {
-  const [activeTab, setActiveTab] = useState('events')
+  const [activeTab, setActiveTab] = useState('flights')
 
   const renderForm = () => {
     const forms = {
@@ -80,5 +79,4 @@ const Hero = () => {
     </div>
   )
 }
-
 export default Hero
