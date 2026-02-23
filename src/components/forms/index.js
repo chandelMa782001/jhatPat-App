@@ -1,0 +1,6 @@
+export { default as HotelsForm } from './HotelsForm'
+export { default as FlightsForm } from './FlightsForm'
+export { default as TrainsForm } from './TrainsForm'
+export { default as BusesForm } from './BusesForm'
+export { default as CabsForm } from './CabsForm'
+export { default as EventsForm } from './EventsForm'

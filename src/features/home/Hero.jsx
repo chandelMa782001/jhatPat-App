@@ -1,55 +1,33 @@
 import { useState } from 'react'
-import { IoBed } from 'react-icons/io5'
-import { MdFlight } from 'react-icons/md'
-import { FaTrain, FaBus, FaTaxi } from 'react-icons/fa'
-import { GiPartyPopper } from 'react-icons/gi'
-
-// Import Form Components
-import HotelsForm from './HeroForms/HotelsForm'
-import FlightsForm from './HeroForms/FlightsForm'
-import TrainsForm from './HeroForms/TrainsForm'
-import BusesForm from './HeroForms/BusesForm'
-import CabsForm from './HeroForms/CabsForm'
-import EventsForm from './HeroForms/EventsForm'
+import { BOOKING_TABS } from '../../constants'
+import HotelsForm from '../../components/forms/HotelsForm'
+import FlightsForm from '../../components/forms/FlightsForm'
+import TrainsForm from '../../components/forms/TrainsForm'
+import BusesForm from '../../components/forms/BusesForm'
+import CabsForm from '../../components/forms/CabsForm'
+import EventsForm from '../../components/forms/EventsForm'
 
 const Hero = () => {
   const [activeTab, setActiveTab] = useState('events')
 
-  const tabs = [
-    { id: 'hotels', label: 'Hotels', icon: IoBed, subtitle: 'Hotels & Cafes' },
-    { id: 'flights', label: 'Flights', icon: MdFlight, subtitle: 'Domestic & Intl' },
-    { id: 'trains', label: 'Trains', icon: FaTrain, subtitle: 'IRCTC & PRS' },
-    { id: 'buses', label: 'Buses', icon: FaBus, subtitle: 'AC & Sleeper' },
-    { id: 'cabs', label: 'Cabs', icon: FaTaxi, subtitle: 'City & Outstation' },
-    { id: 'events', label: 'Events', icon: GiPartyPopper, subtitle: 'Venues & Halls' }
-  ]
-
-  // Render appropriate form based on active tab
   const renderForm = () => {
-    switch (activeTab) {
-      case 'hotels':
-        return <HotelsForm />
-      case 'flights':
-        return <FlightsForm />
-      case 'trains':
-        return <TrainsForm />
-      case 'buses':
-        return <BusesForm />
-      case 'cabs':
-        return <CabsForm />
-      case 'events':
-        return <EventsForm />
-      default:
-        return <EventsForm />
+    const forms = {
+      hotels: HotelsForm,
+      flights: FlightsForm,
+      trains: TrainsForm,
+      buses: BusesForm,
+      cabs: CabsForm,
+      events: EventsForm
     }
+    const FormComponent = forms[activeTab]
+    return <FormComponent />
   }
 
   return (
     <div className="relative">
-      {/* Dark Background - Half Height */}
+      {/* Dark Background */}
       <div className="bg-gradient-to-br from-[#0f1c3f] via-[#1a2847] to-[#0f1c3f] h-[300px]">
         <div className="max-w-7xl mx-auto px-6 pt-12">
-          {/* Heading */}
           <h1 className="text-center text-4xl md:text-5xl font-bold text-white mb-2">
             India's Smartest Way to Book <span className="text-orange-500">Everything</span>
           </h1>
@@ -59,12 +37,12 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Booking Card - Overlapping */}
+      {/* Booking Card */}
       <div className="max-w-7xl mx-auto px-6 -mt-32 pb-16 relative z-10">
         <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-5xl mx-auto">
           {/* Tabs */}
           <div className="flex justify-between mb-6 border-b border-[#F3F4F6]">
-            {tabs.map((tab) => {
+            {BOOKING_TABS.map((tab) => {
               const IconComponent = tab.icon
               return (
                 <button

@@ -1,5 +1,5 @@
 import { IoPeople } from 'react-icons/io5'
-import MarriageBannerImg from '../assets/Image/weddingBg.png'
+import MarriageBannerImg from '../../assets/Image/weddingBg.png'
 
 const MarriageBanner = () => {
   return (

@@ -1,6 +1,6 @@
 import { MdCheckCircle, MdDownload, MdStar } from 'react-icons/md'
 import { FaApple, FaGooglePlay } from 'react-icons/fa'
-import mobile from '../assets/Image/mobileImage.png'
+import mobile from '../../assets/Image/mobileImage.png'
 const AppDownload = () => {
   const features = [
     'Exclusive app-only discounts up to 50%',
