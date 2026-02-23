@@ -88,6 +88,7 @@ const Navbar = () => {
         onClose={() => setShowLoginModal(false)}
         onSwitchToSignup={handleSwitchToSignup}
       />
+      
       <SignupModal 
         isOpen={showSignupModal} 
         onClose={() => setShowSignupModal(false)}

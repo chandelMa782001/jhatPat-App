@@ -1,124 +1,271 @@
 import { useState } from 'react'
-import { Modal, Input, Button } from '../../components/common'
-import { MdEmail, MdLock, MdPerson, MdPhone } from 'react-icons/md'
-import { FaGoogle, FaFacebook } from 'react-icons/fa'
+import { Modal, Input, Button, OTPInput } from '../../components/common'
+import { MdPhone, MdPerson, MdEmail } from 'react-icons/md'
+import { FaGoogle } from 'react-icons/fa'
 
 const SignupModal = ({ isOpen, onClose, onSwitchToLogin }) => {
+  const [step, setStep] = useState('details') // 'details', 'otp', 'success'
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    password: '',
-    confirmPassword: ''
+    otp: ''
   })
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSendOtp = () => {
+    setError('')
+    
+    // Validate all fields
+    if (!formData.name.trim()) {
+      setError('Please enter your name')
+      return
+    }
+    if (!formData.email.trim() || !formData.email.includes('@')) {
+      setError('Please enter a valid email')
+      return
+    }
+    if (formData.phone.length !== 10) {
+      setError('Please enter a valid 10-digit mobile number')
+      return
+    }
+    
+    setStep('otp')
+    console.log('OTP sent to:', formData.phone)
+  }
+
+  const handleVerifyAndSignup = (e) => {
     e.preventDefault()
-    console.log('Signup:', formData)
+    setError('')
+    
+    if (formData.otp.length !== 6) {
+      setError('Please enter a valid 6-digit OTP')
+      return
+    }
+    
+    console.log('Signup successful:', formData)
+    // Handle successful signup
+    setStep('success')
+    setTimeout(() => {
+      onClose()
+    }, 2000)
+  }
+
+  const handleResendOtp = () => {
+    setFormData({ ...formData, otp: '' })
+    setError('')
+    console.log('OTP resent to:', formData.phone)
+    alert('OTP has been resent to your mobile number')
+  }
+
+  const handleEditDetails = () => {
+    setStep('details')
+    setFormData({ ...formData, otp: '' })
+    setError('')
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Create Your Account">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          label="Full Name"
-          type="text"
-          icon={MdPerson}
-          placeholder="Enter your full name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          required
-        />
+    <Modal 
+      isOpen={isOpen} 
+      onClose={onClose} 
+      title={step === 'success' ? 'Welcome!' : 'Create Account'} 
+      size="sm"
+    >
+      <div className="space-y-2.5">
+        {/* Details Step */}
+        {step === 'details' && (
+          <div className="space-y-2.5">
+            {/* Name */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-800 mb-1">
+                Full Name
+              </label>
+              <Input
+                type="text"
+                icon={MdPerson}
+                placeholder="Enter your full name"
+                value={formData.name}
+                onChange={(e) => {
+                  setFormData({ ...formData, name: e.target.value })
+                  setError('')
+                }}
+                required
+                autoFocus
+              />
+            </div>
 
-        <Input
-          label="Email"
-          type="email"
-          icon={MdEmail}
-          placeholder="Enter your email"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          required
-        />
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-800 mb-1">
+                Email Address
+              </label>
+              <Input
+                type="email"
+                icon={MdEmail}
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={(e) => {
+                  setFormData({ ...formData, email: e.target.value })
+                  setError('')
+                }}
+                required
+              />
+            </div>
 
-        <Input
-          label="Phone Number"
-          type="tel"
-          icon={MdPhone}
-          placeholder="Enter your phone number"
-          value={formData.phone}
-          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-          required
-        />
+            {/* Mobile Number */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-800 mb-1">
+                Mobile Number
+              </label>
+              <Input
+                type="tel"
+                icon={MdPhone}
+                placeholder="Enter mobile number"
+                value={formData.phone}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, '')
+                  setFormData({ ...formData, phone: value })
+                  setError('')
+                }}
+                maxLength="10"
+                required
+              />
+            </div>
 
-        <Input
-          label="Password"
-          type="password"
-          icon={MdLock}
-          placeholder="Create a password"
-          value={formData.password}
-          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-          required
-        />
+            {error && (
+              <p className="text-xs text-red-500">{error}</p>
+            )}
 
-        <Input
-          label="Confirm Password"
-          type="password"
-          icon={MdLock}
-          placeholder="Confirm your password"
-          value={formData.confirmPassword}
-          onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-          required
-        />
+            <Button onClick={handleSendOtp} className="w-full mt-3">
+              Continue
+            </Button>
 
-        <label className="flex items-start gap-2 text-sm">
-          <input type="checkbox" className="mt-1 rounded" required />
-          <span className="text-gray-600">
-            I agree to the{' '}
-            <a href="#" className="text-orange-500 hover:underline">
-              Terms & Conditions
-            </a>{' '}
-            and{' '}
-            <a href="#" className="text-orange-500 hover:underline">
-              Privacy Policy
-            </a>
-          </span>
-        </label>
+            {/* Divider */}
+            <div className="relative py-1.5">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-200" />
+              </div>
+              <div className="relative flex justify-center text-xs">
+                <span className="px-3 bg-white text-gray-500">Or sign up with</span>
+              </div>
+            </div>
 
-        <Button type="submit" className="w-full">
-          Create Account
-        </Button>
+            {/* Google Signup */}
+            <button
+              type="button"
+              className="w-full flex items-center justify-center gap-3 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <FaGoogle className="text-red-500 text-lg" />
+              <span className="text-sm font-medium text-gray-700">Continue with Google</span>
+            </button>
 
-        <div className="relative my-6">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-300" />
+            {/* Login Link */}
+            <p className="text-xs text-gray-600 text-center">
+              Already have an account?{' '}
+              <button
+                type="button"
+                onClick={onSwitchToLogin}
+                className="text-blue-600 hover:underline font-semibold"
+              >
+                Login
+              </button>
+            </p>
+
+            {/* Terms */}
+            <p className="text-xs text-gray-500 text-center leading-relaxed">
+              By continuing, you agree to Jhatpat's{' '}
+              <a href="#" className="text-blue-600 hover:underline">Terms of Service</a>
+              {' '}and{' '}
+              <a href="#" className="text-blue-600 hover:underline">Privacy Policy</a>
+            </p>
           </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-gray-500">Or sign up with</span>
+        )}
+
+        {/* OTP Verification Step */}
+        {step === 'otp' && (
+          <form onSubmit={handleVerifyAndSignup} className="space-y-4">
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm text-gray-600">
+                  OTP sent to <span className="font-semibold text-gray-800">+91 {formData.phone}</span>
+                </p>
+                <button
+                  type="button"
+                  onClick={handleEditDetails}
+                  className="text-xs text-blue-600 hover:underline font-medium"
+                >
+                  Edit
+                </button>
+              </div>
+
+              <label className="block text-sm font-semibold text-gray-800 mb-3">
+                Enter OTP
+              </label>
+              
+              <OTPInput
+                length={6}
+                value={formData.otp}
+                onChange={(value) => {
+                  setFormData({ ...formData, otp: value })
+                  setError('')
+                }}
+              />
+
+              {error && (
+                <p className="text-xs text-red-500 mt-2">{error}</p>
+              )}
+
+              <div className="flex items-center justify-between mt-3">
+                <p className="text-xs text-gray-500">
+                  Didn't receive OTP?
+                </p>
+                <button
+                  type="button"
+                  onClick={handleResendOtp}
+                  className="text-xs text-blue-600 hover:underline font-semibold"
+                >
+                  Resend OTP
+                </button>
+              </div>
+            </div>
+
+            {/* User Details Summary */}
+            <div className="bg-gray-50 rounded-lg p-3 space-y-1">
+              <p className="text-xs text-gray-500">Creating account for:</p>
+              <p className="text-sm font-semibold text-gray-800">{formData.name}</p>
+              <p className="text-xs text-gray-600">{formData.email}</p>
+            </div>
+
+            <Button type="submit" className="w-full">
+              Verify & Create Account
+            </Button>
+
+            <p className="text-xs text-gray-500 text-center">
+              Please enter the 6-digit OTP sent to your mobile number
+            </p>
+          </form>
+        )}
+
+        {/* Success Step */}
+        {step === 'success' && (
+          <div className="text-center py-6 space-y-4">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Account Created!</h3>
+              <p className="text-sm text-gray-600">
+                Welcome to Jhatpat, {formData.name.split(' ')[0]}!
+              </p>
+            </div>
+            <div className="animate-pulse">
+              <p className="text-xs text-gray-500">Redirecting...</p>
+            </div>
           </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <Button variant="outline" className="flex items-center justify-center gap-2">
-            <FaGoogle className="text-red-500" />
-            Google
-          </Button>
-          <Button variant="outline" className="flex items-center justify-center gap-2">
-            <FaFacebook className="text-blue-600" />
-            Facebook
-          </Button>
-        </div>
-
-        <p className="text-center text-sm text-gray-600">
-          Already have an account?{' '}
-          <button
-            type="button"
-            onClick={onSwitchToLogin}
-            className="text-orange-500 hover:underline font-medium"
-          >
-            Login
-          </button>
-        </p>
-      </form>
+        )}
+      </div>
     </Modal>
   )
 }

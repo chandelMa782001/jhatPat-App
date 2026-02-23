@@ -27,8 +27,8 @@ src/
 │
 ├── features/               # Feature-based modules
 │   ├── auth/              # Authentication feature
-│   │   ├── LoginModal.jsx
-│   │   └── SignupModal.jsx
+│   │   ├── LoginModal.jsx # Mobile + OTP login
+│   │   └── SignupModal.jsx # Name, Email, Mobile + OTP signup
 │   │
 │   └── home/              # Home page sections
 │       ├── Hero.jsx
