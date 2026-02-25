@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { MdLocationOn, MdCalendarToday, MdPerson } from 'react-icons/md'
 import { Button, Input } from '../common'
 
 const HotelsForm = () => {
+  const navigate = useNavigate()
   const [stayType, setStayType] = useState('hourlyStays')
   const [formData, setFormData] = useState({
     location: '',
@@ -14,6 +16,7 @@ const HotelsForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log('Hotel Search:', formData)
+    navigate('/hotels')
   }
 
   return (

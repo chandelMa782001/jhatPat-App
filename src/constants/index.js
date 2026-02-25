@@ -1,2 +1,5 @@
 export * from './footer'
 export * from './booking'
+export * from './hotels'
+export * from './rooms'
+export * from './checkout'

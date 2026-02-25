@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FaGift, FaBriefcase, FaHeadset, FaGlobe, FaWallet, FaClipboardList, FaUser } from 'react-icons/fa'
+import { FaGift, FaBriefcase, FaHeadset, FaGlobe, FaWallet, FaClipboardList, FaUser, FaSearch } from 'react-icons/fa'
 import { IoChevronDown } from 'react-icons/io5'
 import { image } from '../../utils/Image'
 import { Button } from '../common'
@@ -9,6 +9,7 @@ import SignupModal from '../../features/auth/SignupModal'
 const Navbar = () => {
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [showSignupModal, setShowSignupModal] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const handleSwitchToSignup = () => {
     setShowLoginModal(false)
@@ -60,6 +61,20 @@ const Navbar = () => {
           <div className="max-w-7xl mx-auto flex justify-between items-center">
             <div className="flex items-center">
               <img src={image.logo} alt="Jhatpat Booking" className="h-10" />
+            </div>
+            
+            {/* Search Bar */}
+            <div className="flex-1 max-w-md mx-8">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search destinations, hotels, flights..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full py-2 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                />
+                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              </div>
             </div>
             
             <div className="flex items-center gap-2 text-gray-700 cursor-pointer hover:text-orange-500 transition-colors">
